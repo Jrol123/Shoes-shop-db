@@ -68,6 +68,9 @@ CREATE TABLE IF NOT EXISTS Items
     ID                  INTEGER PRIMARY KEY AUTOINCREMENT,
     'ID company'        INTEGER,
     Description         TEXT,
+    Color               TEXT,
+    --- 42-44
+    Size                varchar(7),
     'Quantity in stock' INTEGER,
     FOREIGN KEY ('ID company') REFERENCES Companies (ID)
 );
