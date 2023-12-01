@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS Clients
 (
     ID             INTEGER PRIMARY KEY AUTOINCREMENT,
+    login          varchar(50),
+    password       varchar(50),
     'First name'   varchar(150),
     'Second name'  varchar(200),
     'Birth date'   DATE,
@@ -23,7 +25,7 @@ CREATE TABLE IF NOT EXISTS 'Shop carts'
     ID          INTEGER PRIMARY KEY AUTOINCREMENT,
     'ID client' INTEGER,
     -- Единоразовый подсчёт суммы покупки при добавлении новго товара
-    'Total sum' INTEGER,
+    'Total sum' INTEGER DEFAULT 0,
     FOREIGN KEY ('ID client') REFERENCES Clients (ID)
 );
 
@@ -57,7 +59,7 @@ CREATE TABLE IF NOT EXISTS 'Items in order'
     FOREIGN KEY ('Item id') REFERENCES Items (ID)
 );
 
-CREATE TABLE Statuses
+CREATE TABLE IF NOT EXISTS Statuses
 (
     ID     INTEGER PRIMARY KEY AUTOINCREMENT,
     Status TEXT UNIQUE
@@ -71,6 +73,7 @@ CREATE TABLE IF NOT EXISTS Items
     Color               TEXT,
     --- 42-44
     Size                varchar(7),
+    Material            varchar(50),
     'Quantity in stock' INTEGER,
     FOREIGN KEY ('ID company') REFERENCES Companies (ID)
 );
