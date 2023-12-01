@@ -21,5 +21,17 @@ for test_index in range(1, max_count + 1):
                    'VALUES (?, ?)',
                    (test_index, 0))
 
+"""Создание записей о продаже"""
+for test_index in range(1, max_count + 1):
+    cursor.execute(
+        'INSERT INTO Sales ("ID item", "ID client", "ID order", "Quantity", "Date")'
+        'VALUES (?, ?, ?, ?, ?)',
+        (random.randrange(1, max_count + 1),
+         random.randrange(1, max_count + 1),
+         random.randrange(1, max_count + 1),
+         random.randrange(1, 365 + 1),
+         fake.date_between(start_date=datetime.date(year=1941, month=6, day=22),
+                           end_date=datetime.date(year=1988, month=11, day=16))))
+
 connection.commit()
 connection.close()
