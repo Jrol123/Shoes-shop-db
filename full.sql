@@ -116,6 +116,20 @@ CREATE TABLE IF NOT EXISTS Companies
     Description TEXT
 );
 
+INSERT INTO Tags (Description) VALUES ('Официальные');
+INSERT INTO Tags (Description) VALUES ('Пляжные');
+INSERT INTO Tags (Description) VALUES ('Купальные');
+INSERT INTO Tags (Description) VALUES ('Горные');
+
+INSERT INTO Statuses (Status) VALUES ('To do_No pay');
+INSERT INTO Statuses (Status) VALUES ('To do_Yes pay');
+INSERT INTO Statuses (Status) VALUES ('In progress_No pay');
+INSERT INTO Statuses (Status) VALUES ('In progress_Yes pay');
+INSERT INTO Statuses (Status) VALUES ('Await_No pay');
+INSERT INTO Statuses (Status) VALUES ('Await_Yes pay');
+INSERT INTO Statuses (Status) VALUES ('Done');
+
+
 DROP TABLE IF EXISTS Clients;
 DROP TABLE IF EXISTS Cards;
 DROP TABLE IF EXISTS 'Shop carts';
