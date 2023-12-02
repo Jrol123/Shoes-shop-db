@@ -9,6 +9,12 @@ max_count = 10 ** 1
 connection = sqlite3.connect('identifier.sqlite')
 cursor = connection.cursor()
 
+cursor.execute('SELECT COUNT(*) FROM Statuses')
+count_status = cursor.fetchone()[0]
+
+cursor.execute('SELECT COUNT(*) FROM Tags')
+count_tags = cursor.fetchone()[0]
+
 """Создание записей для аккаунтов"""
 m = hashlib.sha256()
 for test_index in range(1, max_count + 1):
@@ -50,17 +56,14 @@ for test_index in range(1, max_count + 1):
         (random.randrange(1, max_count + 1), fake.first_name(), fake.paragraph(nb_sentences=6), fake.color(),
          f'{size}-{size + 2}', fake.catch_phrase(), random.randrange(10 ** 3, 10 ** 4), random.randrange(0, 10 ** 3))
     )
-
-    cursor.execute('SELECT COUNT(*) FROM Tags')
-    count_tags = cursor.fetchone()[0]
     cursor.execute(
         'INSERT INTO "Tags to items" ("ID item", "ID tag")'
         'VALUES (?, ?)',
         (random.randrange(1, max_count + 1), random.randrange(1, count_tags + 1))
     )
 
-    status = random.randrange(1, 7 + 1)
-    if status == 7:
+    status = random.randrange(1, count_status + 1)
+    if status == count_status:
         id_orders_done.append(test_index)
         count_orders_done += 1
 
@@ -75,8 +78,6 @@ for test_index in range(1, max_count + 1):
         'VALUES (?, ? , ?)',
         (random.randrange(1, max_count + 1), random.randrange(1, max_count + 1), random.randrange(1, 40 + 1))
     )
-
-print(id_orders_done, count_orders_done)
 
 """Создание записей о продаже"""
 for test_index in range(1, count_orders_done + 1):
