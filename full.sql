@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS Clients
     password       varchar(50),
     'First name'   varchar(150),
     'Second name'  varchar(200),
+    'Phone number' varchar(20),
     'Birth date'   DATE,
     'Address'      TEXT,
     'Shop cart id' INTEGER NOT NULL,
@@ -13,10 +14,11 @@ CREATE TABLE IF NOT EXISTS Clients
 
 CREATE TABLE IF NOT EXISTS Cards
 (
-    ID          INTEGER PRIMARY KEY AUTOINCREMENT,
-    'ID client' INTEGER,
-    Number      varchar(30),
-    Date        DATE,
+    ID              INTEGER PRIMARY KEY AUTOINCREMENT,
+    'ID client'     INTEGER,
+    Number          varchar(30),
+    Date            DATE,
+    'Security code' INTEGER(6),
     FOREIGN KEY ('ID client') REFERENCES Clients (ID)
 );
 -- Если не будет добавлен доп. функционал, то можно убрать эту таблицу и связывать товары напрямую с человеком.
@@ -69,11 +71,13 @@ CREATE TABLE IF NOT EXISTS Items
 (
     ID                  INTEGER PRIMARY KEY AUTOINCREMENT,
     'ID company'        INTEGER,
+    Name                varchar(100),
     Description         TEXT,
     Color               TEXT,
     --- 42-44
-    Size                varchar(7),
+    Size                varchar(5),
     Material            varchar(50),
+    Price               INTEGER,
     'Quantity in stock' INTEGER,
     FOREIGN KEY ('ID company') REFERENCES Companies (ID)
 );
@@ -108,6 +112,7 @@ CREATE TABLE IF NOT EXISTS Tags
 CREATE TABLE IF NOT EXISTS Companies
 (
     ID          INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name        VARCHAR(200),
     Description TEXT
 );
 
@@ -117,9 +122,10 @@ DROP TABLE IF EXISTS 'Shop carts';
 DROP TABLE IF EXISTS 'Items in cart';
 DROP TABLE IF EXISTS Items;
 DROP TABLE IF EXISTS 'Tags to items';
-DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS Sales;
 DROP TABLE IF EXISTS Companies;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS 'Items in order';
+
+DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS Statuses;
