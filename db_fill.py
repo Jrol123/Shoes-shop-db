@@ -4,7 +4,7 @@ from random_username.generate import generate_username
 from faker import Faker
 
 fake = Faker(['ru_RU', 'en_US'])
-max_count = 10 ** 1
+max_count = 10 ** 6
 
 connection = sqlite3.connect('identifier.sqlite')
 cursor = connection.cursor()
@@ -21,13 +21,13 @@ for test_index in range(1, max_count + 1):
         (generate_username()[0], m.hexdigest(), fake.first_name(), fake.last_name(), fake.phone_number(), fake.date(),
          fake.address(), test_index))
 
+    cursor.execute('INSERT INTO Cards ("ID client", Number, Date, "Security code")'
+                   'VALUES (?, ?, ?, ?)',
+                   (random.randrange(1, max_count + 1), fake.credit_card_number(), fake.credit_card_expire(), fake.credit_card_security_code()))
+
     cursor.execute('INSERT INTO "Shop carts" ("ID client", "Total sum")'
                    'VALUES (?, ?)',
                    (test_index, 0))
-
-    cursor.execute('INSERT INTO Cards ("ID client", Number, Date, "Security code")'
-                   'VALUES (?, ?, ?, ?)',
-                   (test_index, fake.credit_card_number(), fake.credit_card_expire(), fake.credit_card_security_code()))
 
 """Создание записей о продаже"""
 for test_index in range(1, max_count + 1):
@@ -55,7 +55,8 @@ for test_index in range(1, max_count + 1):
     cursor.execute(
         'INSERT INTO Items ("ID company", Name, Description, Color, Size, Material, Price, "Quantity in stock")'
         'VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        (random.randrange(1, max_count + 1), fake.first_name(), fake.paragraph(nb_sentences=6), fake.color(), f'{size}-{size + 2}', fake.catch_phrase(), random.randrange(10 ** 3, 10**4), random.randrange(0, 10**3))
+        (random.randrange(1, max_count + 1), fake.first_name(), fake.paragraph(nb_sentences=6), fake.color(),
+         f'{size}-{size + 2}', fake.catch_phrase(), random.randrange(10 ** 3, 10 ** 4), random.randrange(0, 10 ** 3))
     )
 
     cursor.execute(
@@ -76,6 +77,36 @@ for test_index in range(1, max_count + 1):
         'INSERT INTO "Tags to items" ("ID item", "ID tag")'
         'VALUES (?, ?)',
         (random.randrange(1, max_count + 1), random.randrange(1, count_tags + 1))
+    )
+
+"""Заполнение корзины"""
+for test_index in range(1, max_count + 1):
+    item_id = random.randrange(1, max_count + 1)
+    quantity = random.randrange(1, 40 + 1)
+    shopcart_id = random.randrange(1, max_count + 1)
+
+    cursor.execute(
+        'SELECT Price FROM Items WHERE ID == ?',
+        (item_id,)
+    )
+    add_money = cursor.fetchone()[0] * quantity
+
+    cursor.execute(
+        'INSERT INTO "Items in cart" ("Item id", "Shop cart id", Quantity)'
+        'VALUES (?, ?, ?)',
+        (item_id, shopcart_id, quantity)
+    )
+
+    cursor.execute(
+        'SELECT "Total sum" FROM "Shop carts" WHERE ID == ?',
+        (shopcart_id,)
+    )
+
+    total_sum = cursor.fetchone()[0] + add_money
+
+    cursor.execute(
+        'UPDATE "Shop carts" SET "Total sum" = ? WHERE ID = ?',
+        (total_sum, shopcart_id)
     )
 
 connection.commit()
