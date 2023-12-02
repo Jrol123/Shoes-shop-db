@@ -63,7 +63,7 @@ for test_index in range(1, max_count + 1):
     )
 
     status = random.randrange(1, count_status + 1)
-    if status == count_status:
+    if status == count_status or status % 2 == 0:
         id_orders_done.append(test_index)
         count_orders_done += 1
 
