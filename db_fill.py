@@ -12,6 +12,9 @@ cursor = connection.cursor()
 cursor.execute('SELECT COUNT(*) FROM Statuses')
 count_status = cursor.fetchone()[0]
 
+cursor.execute('SELECT COUNT(*) FROM Tags')
+count_tags = cursor.fetchone()[0]
+
 """Создание записей для аккаунтов"""
 m = hashlib.sha256()
 for test_index in range(1, max_count + 1):
@@ -53,9 +56,6 @@ for test_index in range(1, max_count + 1):
         (random.randrange(1, max_count + 1), fake.first_name(), fake.paragraph(nb_sentences=6), fake.color(),
          f'{size}-{size + 2}', fake.catch_phrase(), random.randrange(10 ** 3, 10 ** 4), random.randrange(0, 10 ** 3))
     )
-
-    cursor.execute('SELECT COUNT(*) FROM Tags')
-    count_tags = cursor.fetchone()[0]
     cursor.execute(
         'INSERT INTO "Tags to items" ("ID item", "ID tag")'
         'VALUES (?, ?)',
