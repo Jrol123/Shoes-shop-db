@@ -4,7 +4,7 @@ from random_username.generate import generate_username
 from faker import Faker
 
 fake = Faker(['ru_RU', 'en_US'])
-max_count = 10 ** 1
+max_count = int(input("Введите максимальное количество записей:\n"))
 
 connection = sqlite3.connect('identifier.sqlite')
 cursor = connection.cursor()
@@ -127,3 +127,5 @@ for test_index in range(1, max_count + 1):
 
 connection.commit()
 connection.close()
+
+input("\n\nЗапись данных успешно завершена!\n\n\nНАЖМИТЕ ЛЮБУЮ КЛАВИШУ ДЛЯ ВЫХОДА...")
