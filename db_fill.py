@@ -16,6 +16,7 @@ cursor.execute('SELECT COUNT(*) FROM Tags')
 count_tags = cursor.fetchone()[0]
 
 """Создание записей для аккаунтов"""
+print("Создание записей для аккаунтов")
 m = hashlib.sha256()
 for test_index in range(1, max_count + 1):
     m.update(b"{fake.password()}")
@@ -37,6 +38,7 @@ for test_index in range(1, max_count + 1):
                    (test_index, 0))
 
 """Создание сведений о компании"""
+print("Создание сведений о компании")
 for test_index in range(1, max_count + 1):
     cursor.execute(
         'INSERT INTO Companies (Name, Description)'
@@ -48,6 +50,7 @@ id_orders_done = []
 count_orders_done = 0
 
 """Создание сведений о продуктах"""
+print("Создание сведений о продуктах")
 for test_index in range(1, max_count + 1):
     size = random.randrange(20, 80 - 2 + 1)
     cursor.execute(
@@ -80,6 +83,7 @@ for test_index in range(1, max_count + 1):
     )
 
 """Создание записей о продаже"""
+print("Создание записей о продаже")
 for test_index in range(1, count_orders_done + 1):
     cursor.execute(
         'INSERT INTO Sales ("ID item", "ID client", "ID order", "Quantity", "Date")'
@@ -95,6 +99,7 @@ for test_index in range(1, count_orders_done + 1):
     )
 
 """Заполнение корзины"""
+print("Заполнение корзины")
 for test_index in range(1, max_count + 1):
     item_id = random.randrange(1, max_count + 1)
     quantity = random.randrange(1, 40 + 1)

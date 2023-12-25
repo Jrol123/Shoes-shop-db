@@ -1,3 +1,17 @@
+DROP TABLE IF EXISTS Clients;
+DROP TABLE IF EXISTS Cards;
+DROP TABLE IF EXISTS 'Shop carts';
+DROP TABLE IF EXISTS 'Items in cart';
+DROP TABLE IF EXISTS Items;
+DROP TABLE IF EXISTS 'Tags to items';
+DROP TABLE IF EXISTS Sales;
+DROP TABLE IF EXISTS Companies;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS 'Items in order';
+
+DROP TABLE IF EXISTS Tags;
+DROP TABLE IF EXISTS Statuses;
+
 CREATE TABLE IF NOT EXISTS Clients
 (
     ID             INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -120,7 +134,7 @@ INSERT INTO Tags (Description) VALUES ('Официальные');
 INSERT INTO Tags (Description) VALUES ('Пляжные');
 INSERT INTO Tags (Description) VALUES ('Купальные');
 INSERT INTO Tags (Description) VALUES ('Горные');
-
+-- Возможно, стоит добавить статус возврата
 INSERT INTO Statuses (Status) VALUES ('To do_No pay');
 INSERT INTO Statuses (Status) VALUES ('To do_Yes pay');
 INSERT INTO Statuses (Status) VALUES ('In progress_No pay');
@@ -128,18 +142,3 @@ INSERT INTO Statuses (Status) VALUES ('In progress_Yes pay');
 INSERT INTO Statuses (Status) VALUES ('Await_No pay');
 INSERT INTO Statuses (Status) VALUES ('Await_Yes pay');
 INSERT INTO Statuses (Status) VALUES ('Done');
-
-
-DROP TABLE IF EXISTS Clients;
-DROP TABLE IF EXISTS Cards;
-DROP TABLE IF EXISTS 'Shop carts';
-DROP TABLE IF EXISTS 'Items in cart';
-DROP TABLE IF EXISTS Items;
-DROP TABLE IF EXISTS 'Tags to items';
-DROP TABLE IF EXISTS Sales;
-DROP TABLE IF EXISTS Companies;
-DROP TABLE IF EXISTS Orders;
-DROP TABLE IF EXISTS 'Items in order';
-
-DROP TABLE IF EXISTS Tags;
-DROP TABLE IF EXISTS Statuses;
